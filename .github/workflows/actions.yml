@@ -1,0 +1,63 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - development
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install Collectl
+        run: sudo apt-get update && sudo apt-get install -y collectl
+
+      - name: Starten von collectl im Hintergrund
+        run: sudo collectl -s cdmn -i1 -P --sep ',' -f /var/log/collectl/performance_Messung.csv &
+
+      - name: Warten auf die Bereitschaft von collectl
+        run: sleep 10
+
+      - name: Run Tests
+        run: npm run ci:cy-run
+
+      - name: Cooldown
+        run: sleep 10
+
+      - name: Stoppen von collectl
+        run: sudo killall collectl
+
+      - name: Check Logs
+        run: ls /var/log/collectl/
+
+      - name: Log-Datei entpacken und verschieben
+        run: sudo gzip -d /var/log/collectl/performance_Messung.csv*.gz*
+
+      - name: Check Logs again
+        run: ls /var/log/collectl/
+
+      - name: Log-Datei in CSV-Format exportieren
+        run: sudo cp /var/log/collectl/performance_Messung*.tab* /var/log/collectl/performance_Messung.csv
+
+      - name: Speichern von collectl-Logs als Artefakte
+        uses: actions/upload-artifact@v3
+        with:
+          name: collectl-logs
+          path: /var/log/collectl/performance_Messung.csv

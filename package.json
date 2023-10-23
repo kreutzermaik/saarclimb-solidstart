@@ -1,0 +1,54 @@
+{
+  "name": "solidstart-planer",
+  "scripts": {
+    "dev": "solid-start dev",
+    "build": "solid-start build",
+    "start": "solid-start start",
+    "cy:run": "cypress run --browser chrome",
+    "cy:open": "cypress open",
+    "test": "cypress run",
+    "e2e": "cypress run",
+    "ci:start-server": "npm run dev",
+    "ci:cy-run": "start-server-and-test ci:start-server http://localhost:3000 cy:run"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/cypress": "^1.1.3",
+    "@types/d3": "^7.4.2",
+    "autoprefixer": "^10.4.13",
+    "cypress": "^12.17.1",
+    "npm": "^9.8.0",
+    "postcss": "^8.4.21",
+    "solid-start-netlify": "^0.1.0",
+    "solid-start-node": "^0.2.19",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.4",
+    "vite": "^4.2.0",
+    "vite-plugin-pwa": "^0.14.4"
+  },
+  "dependencies": {
+    "@fullcalendar/core": "^6.1.4",
+    "@fullcalendar/daygrid": "^6.1.4",
+    "@fullcalendar/interaction": "^6.1.6",
+    "@solidjs/meta": "^0.28.2",
+    "@solidjs/router": "^0.7.0",
+    "@supabase/supabase-js": "^2.8.0",
+    "audit": "^0.0.6",
+    "base64-arraybuffer": "^1.0.2",
+    "browser-image-compression": "^2.0.2",
+    "buffer": "^6.0.3",
+    "d3": "^7.8.5",
+    "daisyui": "^2.51.3",
+    "flowbite": "^1.6.3",
+    "flowbite-datepicker": "^1.2.2",
+    "fullcalendar": "^6.1.4",
+    "path": "^0.12.7",
+    "solid-js": "^1.6.15",
+    "solid-start": "^0.2.23",
+    "start-server-and-test": "^2.0.0",
+    "undici": "^5.15.1"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

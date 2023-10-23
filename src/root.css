@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+@import "toasts.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html {
+  background-color: #F5F5F5;
+  font-family: "Manrope", serif;
+}
+
+:root {
+  /* Colors */
+  --primary: #2c3e50;
+  --secondary: #45607d;
+  --lightGrey: #596169;
+  --darkGrey: #393e43;
+  --backgroundGrey: #e0e0e0;
+  --highlight: #82543b;
+  --success: #25a05c;
+
+  /* Button Colors */
+  --button-white: #fff;
+  --button-yellow: #ecc858;
+  --button-green: #90ba90;
+  --button-red: #f85c5c;
+  --button-orange: darkorange;
+  --button-blue: #1b7abd;
+  --button-black: #000;
+  --button-turquiose: lightseagreen;
+
+  /* Gradient Colors */
+  --gradient-blue: linear-gradient(135deg, #2AA6DA 0%, #1B7B77 100%);
+  --gradient-lightblue: linear-gradient(-45deg, rgba(73,84,222,1) 0%,rgba(73,221,216,1) 100%);
+  --gradient-orange: linear-gradient(140deg, rgb(241 160 61), rgb(192 74 65),  rgb(115, 52, 52));
+  --gradient-green: linear-gradient(to right bottom, #2be7b5, #1edea2, #16d58f, #13cb7c, #16c268, #0db866, #04ae64, #00a462, #00976c, #008971, #007b72, #006d6d);
+  --gradient-light: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+  --gradient-purple: linear-gradient(to right top, #7f469d, #8242aa, #833db7, #8338c4, #8233d2, #8a35da, #9336e2, #9b38ea, #af41ee, #c24af2, #d554f7, #e65ffb);
+}
+
+.gradient-blue {
+  background: var(--gradient-blue);
+}
+
+.gradient-lightblue {
+  background: var(--gradient-lightblue);
+}
+
+.gradient-orange {
+  background: var(--gradient-orange);
+}
+
+.gradient-green {
+  background: var(--gradient-green);
+}
+
+.gradient-light {
+  background: var(--gradient-light);
+}
+
+.gradient-purple {
+  background: var(--gradient-purple);
+}
+
+.userImage {
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.fc-toolbar-title {
+  font-size: 20px !important;
+  font-weight: 600;
+}
+
+nav {
+  z-index: 1;
+}
+
+.board-table {
+  margin-bottom: 5%;
+}
+
+button:disabled {
+  opacity: 50%;
+}
+
+/*.planer-table thead th {background: #b0c4de !important;}
+.planer-table tr:nth-child(odd) td {background: #e2ecf3 !important;}
+.planer-table tr:nth-child(even) td {background: #b0c4de !important;}*/
+
+@media screen and (max-width: 640px) {
+  .board-table {
+    margin-bottom: 25%;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .login-container {
+    width: 66.6666%;
+  }
+}
+
+/* Show up and down arrows for input fields on mobile devices*/
+@media (max-width: 767px) {
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
