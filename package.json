@@ -9,7 +9,9 @@
     "test": "cypress run",
     "e2e": "cypress run",
     "ci:start-server": "npm run dev",
-    "ci:cy-run": "start-server-and-test ci:start-server http://localhost:3000 cy:run"
+    "ci:cy-run": "start-server-and-test ci:start-server http://localhost:3000 cy:run",
+    "lighthouse:run": "node ./src/test/performance/dashboard.js && node ./src/test/performance/progress.js",
+    "ci:lighthouse-run": "start-server-and-test ci:start-server http://localhost:3000 lighthouse:run"
   },
   "type": "module",
   "devDependencies": {
@@ -42,7 +44,9 @@
     "flowbite": "^1.6.3",
     "flowbite-datepicker": "^1.2.2",
     "fullcalendar": "^6.1.4",
+    "lighthouse": "^11.3.0",
     "path": "^0.12.7",
+    "puppeteer": "^21.6.0",
     "solid-js": "^1.6.15",
     "solid-start": "^0.2.23",
     "start-server-and-test": "^2.0.0",

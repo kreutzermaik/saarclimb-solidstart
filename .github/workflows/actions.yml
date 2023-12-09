@@ -44,20 +44,19 @@ jobs:
       - name: Stoppen von collectl
         run: sudo killall collectl
 
-      - name: Check Logs
-        run: ls /var/log/collectl/
-
       - name: Log-Datei entpacken und verschieben
         run: sudo gzip -d /var/log/collectl/performance_Messung.csv*.gz*
-
-      - name: Check Logs again
-        run: ls /var/log/collectl/
 
       - name: Log-Datei in CSV-Format exportieren
         run: sudo cp /var/log/collectl/performance_Messung*.tab* /var/log/collectl/performance_Messung.csv
 
-      - name: Speichern von collectl-Logs als Artefakte
+      - name: Starten der Lighthouse Tests
+        run: npm run ci:lighthouse-run
+
+      - name: Speichern der Ergebnisse als Artefakte
         uses: actions/upload-artifact@v3
         with:
-          name: collectl-logs
-          path: /var/log/collectl/performance_Messung.csv
+          name: test-results
+          path: |
+            /var/log/collectl/performance_Messung.csv
+            ${{ github.workspace }}/src/test/reports/

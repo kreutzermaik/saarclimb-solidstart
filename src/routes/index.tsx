@@ -5,17 +5,21 @@ import NotLoggedIn from "~/components/ui/NotLoggedIn";
 import Header from "~/components/ui/Header";
 import Calendar from "~/components/features/Calendar";
 import PlanerCompact from "~/components/features/PlanerCompact";
+import {autoLogin} from "~/test/autoLogin";
+import {setIsLoggedIn, isLoggedIn} from "~/store";
 
 export default function Home() {
-  const [loggedIn, setLoggedIn] = createSignal(false);
 
   /**
    * gets called on init
    */
   onMount(async () => {
     if (await Session.isLoggedIn()) {
-      setLoggedIn(true);
+      setIsLoggedIn(true);
       await DataProvider.initUserData();
+    } else if (await Session.isLoggedIn() === false && process.env.NODE_ENV === "development") {
+      await autoLogin();
+      setIsLoggedIn(true);
     }
   });
 
@@ -23,7 +27,7 @@ export default function Home() {
     <main class="text-center mx-auto text-gray-700">
       <Header text="Dashboard" />
 
-      <Show when={loggedIn()} fallback={() => <NotLoggedIn />} keyed>
+      <Show when={isLoggedIn()} fallback={() => <NotLoggedIn />} keyed>
         <PlanerCompact />
         <br />
         <div class="card card-compact shadow-xl bg-white">
