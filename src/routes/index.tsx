@@ -1,6 +1,5 @@
-import { createSignal, onMount, Show } from "solid-js";
+import { onMount, Show } from "solid-js";
 import DataProvider from "~/data-provider";
-import Session from "~/session";
 import NotLoggedIn from "~/components/ui/NotLoggedIn";
 import Header from "~/components/ui/Header";
 import Calendar from "~/components/features/Calendar";
@@ -14,10 +13,10 @@ export default function Home() {
    * gets called on init
    */
   onMount(async () => {
-    if (await Session.isLoggedIn()) {
+    if (isLoggedIn()) {
       setIsLoggedIn(true);
       await DataProvider.initUserData();
-    } else if (await Session.isLoggedIn() === false && process.env.NODE_ENV === "development") {
+    } else if (!isLoggedIn() && process.env.NODE_ENV === "development") {
       await autoLogin();
       setIsLoggedIn(true);
     }
