@@ -169,6 +169,7 @@ export default function ProgressCard() {
      * @param grade
      */
     function getGymGradeValueByName(grade: string): any {
+        console.log(grade);
         return currentGym().grades?.find(item => item.grade === grade)?.value;
     }
 
