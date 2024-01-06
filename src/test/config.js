@@ -13,12 +13,34 @@ export const browser = await puppeteer.launch({
 
 const page = await browser.newPage();
 
+const desktopConfig = {
+    extends: 'lighthouse:default',
+    settings: {
+        formFactor: 'desktop',
+        screenEmulation: {
+            mobile: false,
+            width: 1350,
+            height: 940,
+            deviceScaleFactor: 1,
+            disabled: false
+        },
+        throttling: {
+            rttMs: 40,
+            throughputKbps: 10240,
+            cpuSlowdownMultiplier: 1,
+            requestLatencyMs: 0,
+            downloadThroughputKbps: 0,
+            uploadThroughputKbps: 0
+        }
+    }
+};
+
 /**
  * @param {string | undefined} pageName
  */
 export async function testPerformance(pageName) {
     // @ts-ignore
-    const {lhr} = await lighthouse(BASE_URL + pageName, undefined, undefined, page);
+    const {lhr} = await lighthouse(BASE_URL + pageName, undefined, desktopConfig, page);
     await generateReport(lhr, pageName);
 }
 
