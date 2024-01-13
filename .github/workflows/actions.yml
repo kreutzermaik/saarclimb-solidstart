@@ -18,6 +18,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Check CPU Info
+        run: lscpu
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -29,8 +32,50 @@ jobs:
       - name: Install Collectl
         run: sudo apt-get update && sudo apt-get install -y collectl
 
-      - name: Starten von collectl im Hintergrund
-        run: sudo collectl -s cdmn -i1 -P --sep ',' -f /var/log/collectl/performance_Messung.csv &
+      - name: Starten von collectl im Hintergrund fuer Baseline Messung
+        run: sudo collectl -s cdmn -i1 -P --sep ',' -f /var/log/collectl/performance_baseline.csv &
+
+      - name: Warten auf die Bereitschaft von collectl
+        run: sleep 10
+
+      - name: Warten fuer 60 Sekunden
+        run: sleep 60
+
+      - name: Cooldown
+        run: sleep 10
+
+      - name: Stoppen von collectl
+        run: sudo killall collectl
+
+      - name: Log-Datei entpacken und verschieben
+        run: sudo gzip -d /var/log/collectl/performance_baseline.csv*.gz*
+
+      - name: Log-Datei in CSV-Format exportieren
+        run: sudo cp /var/log/collectl/performance_baseline*.tab* /var/log/collectl/performance_baseline.csv
+
+      - name: Starten von collectl im Hintergrund fuer Leerlauf Messung
+        run: sudo collectl -s cdmn -i1 -P --sep ',' -f /var/log/collectl/performance_idle.csv &
+
+      - name: Warten auf die Bereitschaft von collectl
+        run: sleep 10
+
+      - name: Run Tests
+        run: npm run ci:cy-run-idle
+
+      - name: Cooldown
+        run: sleep 10
+
+      - name: Stoppen von collectl
+        run: sudo killall collectl
+
+      - name: Log-Datei entpacken und verschieben
+        run: sudo gzip -d /var/log/collectl/performance_idle.csv*.gz*
+
+      - name: Log-Datei in CSV-Format exportieren
+        run: sudo cp /var/log/collectl/performance_idle*.tab* /var/log/collectl/performance_idle.csv
+
+      - name: Starten von collectl im Hintergrund fuer Szenario Messung
+        run: sudo collectl -s cdmn -i1 -P --sep ',' -f /var/log/collectl/performance_szenario.csv &
 
       - name: Warten auf die Bereitschaft von collectl
         run: sleep 10
@@ -45,10 +90,10 @@ jobs:
         run: sudo killall collectl
 
       - name: Log-Datei entpacken und verschieben
-        run: sudo gzip -d /var/log/collectl/performance_Messung.csv*.gz*
+        run: sudo gzip -d /var/log/collectl/performance_szenario.csv*.gz*
 
       - name: Log-Datei in CSV-Format exportieren
-        run: sudo cp /var/log/collectl/performance_Messung*.tab* /var/log/collectl/performance_Messung.csv
+        run: sudo cp /var/log/collectl/performance_szenario*.tab* /var/log/collectl/performance_szenario.csv
 
       - name: Starten der Lighthouse Tests
         run: npm run ci:lighthouse-run
@@ -58,5 +103,7 @@ jobs:
         with:
           name: test-results
           path: |
-            /var/log/collectl/performance_Messung.csv
+            /var/log/collectl/performance_baseline.csv
+            /var/log/collectl/performance_idle.csv
+            /var/log/collectl/performance_szenario.csv
             ${{ github.workspace }}/src/test/reports/
