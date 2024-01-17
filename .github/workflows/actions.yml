@@ -98,12 +98,17 @@ jobs:
       - name: Starten der Lighthouse Tests
         run: npm run ci:lighthouse-run
 
+      - name: Kopiere Dateien in temporäres Verzeichnis
+        run: |
+          mkdir temp-artifacts
+          cp /var/log/collectl/performance_baseline.csv temp-artifacts/
+          cp /var/log/collectl/performance_idle.csv temp-artifacts/
+          cp /var/log/collectl/performance_szenario.csv temp-artifacts/
+          cp -r ${{ github.workspace }}/src/test/reports/* temp-artifacts/
+
       - name: Speichern der Ergebnisse als Artefakte
         uses: actions/upload-artifact@v3
         with:
-          name: test-results
-          path: |
-            /var/log/collectl/performance_baseline.csv
-            /var/log/collectl/performance_idle.csv
-            /var/log/collectl/performance_szenario.csv
-            ${{ github.workspace }}/src/test/reports/
+          name: SolidStart-${{ github.run_number }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: temp-artifacts/
+
