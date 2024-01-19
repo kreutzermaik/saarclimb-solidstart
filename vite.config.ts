@@ -7,9 +7,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
   plugins: [
     solid({ 
-      ssr: true,
-      // islands: true,
-      adapter: netlify() 
+      ssr: false,
+      adapter: netlify()
     }),   
     VitePWA({
       manifest: {
