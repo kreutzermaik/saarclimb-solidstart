@@ -1,30 +1,44 @@
-# SolidStart
+# SaarClimb - SolidStart
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+> 👷‍♀️In dieser README wird die Architektur des Projektes erklärt
 
-## Creating a project
+## 📄 Allgemein
+- Dieses Projekt entsteht im Rahmen meiner Masterthesis
+- Hierfür wird eine Web-App entwickelt, die Boulderer und Sportler beim Planen und Dokumentieren von Klettertouren unterstützt
+- Die App wird in den dreien JavaScript Meta-Frameworks [SvelteKit](https://kit.svelte.dev/), [SolidStart](https://start.solidjs.com/getting-started/what-is-solidstart) und [Next.js](https://nextjs.org/) entwickelt und analysiert
+- SaarClimb ist eine PWA (Progressive Web App)
 
-```bash
-# create a new project in the current directory
-npm init solid@latest
+## 💻 Tech Stack
 
-# create a new project in my-app
-npm init solid@latest my-app
-```
+- Die Basis bildet das Meta-Framework [SvelteKit](https://kit.svelte.dev/)
+- Die Komponenten werden entsprechend mit TypeScript und HTML umgesetzt
+- Die Styles werden mit [TailwindCSS](https://tailwindcss.com/) geschrieben
+- Dynamische Datenanzeige wird durch die _Backend as a Service_ Plattform [Supabase](https://supabase.io/) realisiert
+- Dort stehen eine PostgreSQL Datenbank sowie ein Storage für Dateien und Möglichkeiten zur Authentifizierung zur Verfügung
 
-## Developing
+## 🗂️ Übersicht über die Komponenten
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- Die Komponenten befinden sich im Ordner `./src/components/`
+- Diese sind unterschieden in `Features` und `UI-Elemente`
+- Die Seiten befinden sich im Ordner `./src/routes/`
 
-```bash
-npm run dev
+## ⌘ Commands
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+| Command           | Action                                          |
+|:------------------|:------------------------------------------------|
+| `npm install`     | Abhängigkeiten installieren                     |
+| `npm run dev`     | Startet lokalen Server `http://localhost:3000/` |
+| `npm run build`   | Bauprozess für die Produktion                   |
 
-## Building
+## 🖥️ CI/CD
 
-Solid apps are built with _adapters_, which optimise your project for deployment to different environments.
+- GitHub Action Workflows werden für automatisierte Tests verwendet
 
-By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different adapter, add it to the `devDependencies` in `package.json` and specify in your `vite.config.js`.
+## 📝 License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## 📧 Kontakt
+
+- [GitHub](https://github.com/kreutzermaik)
+- [LinkedIn](https://linkedin.com/in/maik-kreutzer-889a79197)
