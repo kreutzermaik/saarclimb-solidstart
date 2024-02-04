@@ -1,5 +1,5 @@
 import solid from "solid-start/vite";
-import netlify from "solid-start-netlify";
+import vercel from "solid-start-vercel";
 import { defineConfig } from "vite";
 import { VitePWA } from 'vite-plugin-pwa';
 
@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     solid({ 
       ssr: false,
-      adapter: netlify()
+      adapter: vercel()
     }),   
     VitePWA({
       manifest: {
